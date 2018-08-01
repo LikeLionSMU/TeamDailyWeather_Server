@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
 // API
 app.use('/api/users', require('./api/users'));
 app.use('/api/auth', require('./api/auth'));
-
+app.use('/api/contents',require('./api/contents'));
 // Server
 var port = 3000;
 app.listen(port, function(){
