@@ -42,20 +42,6 @@ router.put('/:user_id', util.isLoggedin,function(req,res,next){
   Board.findOneAndUpdate({user_id:req.params.user_id},req.body,function(err,board){
     if(err||!board) return res.json(util.successFalse(err));
 
-    // save updated Board
-/*
-    board.gu=req.body.gu;
-    board.air_volume=req.body.air_volume;
-    board.heat=req.body.heat;
-    board.cold=req.body.cold;
-    board.humidity=req.body.humidity;
-    board.user_outer=req.body.user_outer;
-    board.user_top=req.body.user_top;
-    board.user_bottom = req.body.user_bottom;
-    board.content=req.body.content;
-    board.image=req.body.image;
-
-  */
     return res.json(util.successTrue(board));
 });
 });
@@ -68,3 +54,24 @@ router.delete('/:user_id', util.isLoggedin,function(req,res,next){
     return res.json(util.successTrue(board));
 });
 });
+//구별로 보여주기.
+router.get('/:gu',util.isLoggedin, function(req,res,next){
+ Board.find({gu:req.params.gu})
+ .sort({created_at:-1})
+ .exec(function(err,boards){
+   res.json(err||!boards? util.successFalse(err):util.successTrue(boards));
+ });
+});
+
+//세시간 간격으로 보여주기.
+router.get('/main',util.isLoggedin,function(req,res,next){
+ Board.find({
+   created_at : {
+     $gte: new Date(new Date().getDate(new Date().getHours()-3)),
+     $lt: new Date()
+   }})
+ .sort({created_at:-1})
+ .exec(function(err,boards){
+   res.json(err||!boards? util.successFalse(err):util.successTrue(boards));
+ });
+ });

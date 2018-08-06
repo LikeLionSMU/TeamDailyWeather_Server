@@ -24,13 +24,16 @@ humidity:{
   required:[true,"humidity is required"]
 },
 user_outer:{
-  type:Number
+  type:Number,
+  required:[true,"user_outer is required"]
 },
 user_top:{
-  type:Number
+  type:Number,
+  required:[true,"user_top is required"]
 },
 user_bottom:{
-  type:Number
+  type:Number,
+  required:[true,"user_bottom is required"]
 },
 notify_count:{
   type:Number
